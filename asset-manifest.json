@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/wordly/static/css/main.eea535f8.css",
+    "main.js": "/wordly/static/js/main.f8d1105a.js",
+    "index.html": "/wordly/index.html",
+    "main.eea535f8.css.map": "/wordly/static/css/main.eea535f8.css.map",
+    "main.f8d1105a.js.map": "/wordly/static/js/main.f8d1105a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.eea535f8.css",
+    "static/js/main.f8d1105a.js"
+  ]
+}
