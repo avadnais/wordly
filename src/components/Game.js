@@ -43,6 +43,11 @@ function Game(props) {
         alert("Too short");
         return;
       }
+      if(!words.includes(state.guess)){
+        alert(`${state.guess} not found`)
+        return;
+      }
+
       dispatch(submitGuess());
       checkGuessedLetters();
       //dispatch(submitGuessedLetters());
