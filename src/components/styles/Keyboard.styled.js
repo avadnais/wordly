@@ -15,6 +15,7 @@ export const StyledKeyboardRow = styled.div`
   max-width: 100%;
 
   button {
+    font-size: 1rem;
     margin: 0 5px 0 0;
     min-height: 3rem;
     border-radius: 4px;
