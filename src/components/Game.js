@@ -4,6 +4,7 @@ import GameBoard from "./GameBoard";
 import Keyboard from "./Keyboard";
 import { StyledGame } from "./styles/Game.styled";
 import {
+  setSelectedLetter,
   newGame,
   toggleGameOver,
   addGuessedLetter,
@@ -13,12 +14,14 @@ import {
   addLetter,
   toggleCorrect,
   setSolution,
+  clearSelectedLetter,
 } from "../reducers";
 
 import { words } from "./words.js";
 
 function Game(props) {
   const { state, dispatch } = props;
+  const TIMEOUT = 50;
 
   const generateSolutionWord = () => {
     let solutionWord = "";
@@ -33,6 +36,10 @@ function Game(props) {
     const keyIsLetter = /[a-zA-Z]{1}/.test(key);
 
     if (key === "Backspace") {
+      dispatch(setSelectedLetter('Backspace'))
+      setTimeout(() => {
+        dispatch(clearSelectedLetter())
+      }, TIMEOUT)
       dispatch(removeLetter());
     }
 
@@ -41,6 +48,9 @@ function Game(props) {
     }
 
     if (key === "Enter") {
+
+      dispatch(setSelectedLetter('Enter'))
+      dispatch(clearSelectedLetter())
 
       if(state.gameOver){
         dispatch(newGame())
@@ -59,6 +69,19 @@ function Game(props) {
       dispatch(submitGuess());
       checkGuessedLetters();
       checkGuess();
+    }
+  };
+
+  const handleLetter = (key) => {
+    if (state.guess.length >= 5) return;
+    dispatch(addLetter(key.toUpperCase()));
+    setTimeout(() => {
+      dispatch(clearSelectedLetter())
+    }, TIMEOUT)
+    if (state.guess.length > 0) {
+      if (state.guess === state.solution) {
+        dispatch(toggleCorrect());
+      }
     }
   };
 
@@ -135,16 +158,6 @@ function Game(props) {
     checkForClues();
     //console.log(state);
   }, [state.submittedGuesses]);
-
-  const handleLetter = (key) => {
-    if (state.guess.length >= 5) return;
-    dispatch(addLetter(key.toUpperCase()));
-    if (state.guess.length > 0) {
-      if (state.guess === state.solution) {
-        dispatch(toggleCorrect());
-      }
-    }
-  };
 
   return (
     <StyledGame className="game">

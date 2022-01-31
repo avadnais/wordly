@@ -1,4 +1,20 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+
+
+const animateColor = (c) => keyframes`
+    0% {
+      background-color: transparent;
+    }
+
+    100% {
+      background-color: ${ c === "🟩"
+          ?  "rgba(63, 191, 63, .7)" 
+          : c === "🟨" 
+          ? "rgba(228, 228, 31, .7)"
+          : "transparent"};
+    }
+`;
 
 export const StyledTile = styled.div`
   display: inline-flex;
@@ -16,12 +32,14 @@ export const StyledTile = styled.div`
   max-height: min(4rem, 20vw);
   max-width: min(4rem, 20vw);
   text-transform: uppercase;
-  
 
   background-color: ${(props) =>
     props.clue === "🟩"
-      ? "rgba(63, 191, 63, .5)"
+      ? "rgba(63, 191, 63, .7)"
       : props.clue === "🟨"
-      ? "rgba(228, 228, 31, .5)"
+      ? "rgba(228, 228, 31, .7)"
       : "transparent"};
+
+  animation: ${props => animateColor(props.clue)} 1s;
 `;
+

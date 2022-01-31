@@ -5,7 +5,8 @@ const initialState = {
   submittedGuesses: [],
   submittedGuessesClues: [],
   guessedLetters: {},
-  gameOver: false
+  gameOver: false,
+  selectedLetter: null
 };
 
 export const guessReducer = (state = initialState, action) => {
@@ -14,6 +15,7 @@ export const guessReducer = (state = initialState, action) => {
       return {
         ...state,
         guess: state.guess + action.payload,
+        selectedLetter: action.payload
       };
     case "removeLetter":
       return {
@@ -55,6 +57,16 @@ export const guessReducer = (state = initialState, action) => {
       }
     case "newGame":
       return initialState;
+    case 'setSelectedLetter':
+      return {
+        ...state,
+        selectedLetter: action.payload
+      }
+    case 'clearSelectedLetter':
+      return {
+        ...state,
+        selectedLetter: null
+      }
     default:
       return state;
   }
@@ -117,5 +129,17 @@ export function toggleGameOver(){
 export function newGame(){
   return {
     type: 'newGame'
+  }
+}
+
+export function setSelectedLetter(letter){
+  return {
+    type: 'setSelectedLetter',
+    payload: letter
+  }
+}
+export function clearSelectedLetter(){
+  return {
+    type: 'clearSelectedLetter',
   }
 }
