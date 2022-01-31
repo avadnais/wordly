@@ -44,6 +44,7 @@ function Game(props) {
 
       if(state.gameOver){
         dispatch(newGame())
+        dispatch(setSolution(generateSolutionWord()));
         return;
       }
 
@@ -132,7 +133,7 @@ function Game(props) {
 
   useEffect(() => {
     checkForClues();
-    console.log(state);
+    //console.log(state);
   }, [state.submittedGuesses]);
 
   const handleLetter = (key) => {
