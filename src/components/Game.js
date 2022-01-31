@@ -47,7 +47,6 @@ function Game(props) {
         alert(`${state.guess} not found`)
         return;
       }
-
       dispatch(submitGuess());
       checkGuessedLetters();
       checkGuess();
