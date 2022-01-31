@@ -4,26 +4,27 @@ import GameBoard from "./GameBoard";
 import Keyboard from "./Keyboard";
 import { StyledGame } from "./styles/Game.styled";
 import {
-    addClue,
+  addGuessedLetter,
+  addClue,
   removeLetter,
   submitGuess,
   addLetter,
   toggleCorrect,
-  setSolution
+  setSolution,
 } from "../reducers";
 
-import {words} from './words.js'
+import { words } from "./words.js";
 
 function Game(props) {
   const { state, dispatch } = props;
 
   const generateSolutionWord = () => {
-      let solutionWord = ''
-      while(solutionWord.length !== 5){
-          solutionWord = words[Math.floor(Math.random() * words.length)]
-      }
-      return solutionWord
-  }
+    let solutionWord = "";
+    while (solutionWord.length !== 5) {
+      solutionWord = words[Math.floor(Math.random() * words.length)];
+    }
+    return solutionWord;
+  };
 
   const onKey = (key) => {
     //console.log(`keyDown: ${key}`);
@@ -43,8 +44,26 @@ function Game(props) {
         return;
       }
       dispatch(submitGuess());
+      checkGuessedLetters();
+      //dispatch(submitGuessedLetters());
+      //console.log(state.guessedLetters)
       //console.log(state);
       checkGuess();
+    }
+  };
+
+  const checkGuessedLetters = () => {
+    const lettersArr = state.guess.split("");
+
+    for (const letter of lettersArr) {
+        (state.solution.includes(letter) &&
+          state.solution.charAt(state.guess.indexOf(letter)) === letter) ||
+        state.guessedLetters[letter] === "green"
+          ? dispatch(addGuessedLetter(letter, "green"))
+          : state.solution.includes(letter)
+          ? dispatch(addGuessedLetter(letter, "yellow"))
+          : dispatch(addGuessedLetter(letter, "gray"));
+
     }
   };
 
@@ -54,9 +73,8 @@ function Game(props) {
       state.solution
     ) {
       alert("You win!");
-    }
-    else if (state.submittedGuesses.length === 6){
-      alert(`You lose! The word was ${state.solution}`) 
+    } else if (state.submittedGuesses.length === 6) {
+      alert(`You lose! The word was ${state.solution}`);
       //resetGame()
     }
   };
@@ -66,7 +84,7 @@ function Game(props) {
       const clue = [
         ...state.submittedGuesses[state.submittedGuesses.length - 1],
       ].map((letter, i) => {
-          //console.log(letter)
+        //console.log(letter)
         if (state.solution.charAt(i) === letter) {
           return "🟩";
         }
@@ -76,14 +94,14 @@ function Game(props) {
         return "⬜";
       });
       //console.log(clue);
-      dispatch(addClue(clue))
+      dispatch(addClue(clue));
     }
   };
 
   useEffect(() => {
     const solution = generateSolutionWord();
     dispatch(setSolution(solution));
-  }, []) 
+  }, []);
 
   useEffect(() => {
     const onKeyDown = (e) => {
@@ -103,7 +121,8 @@ function Game(props) {
 
   useEffect(() => {
     checkForClues();
-  }, [state.submittedGuesses])
+    console.log(state);
+  }, [state.submittedGuesses]);
 
   const handleLetter = (key) => {
     if (state.guess.length >= 5) return;

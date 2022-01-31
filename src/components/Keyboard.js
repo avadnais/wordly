@@ -6,19 +6,30 @@ const Row2 = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
 const Row3 = ["Enter", "Z", "X", "C", "V", "B", "N", "M", "Backspace"];
 
 function Keyboard(props) {
+  console.log(props.state.guessedLetters["Q"]);
   const onKey = props.onKey;
   return (
     <StyledKeyboard className="styled-kb">
       <StyledKeyboardRow className="styled-kb-row">
         {Row1.map((letter, i) => (
-          <button key={i} letter={letter} onClick={(e) => onKey(letter)}>
+          <button
+            className={props.state.guessedLetters[letter]}
+            key={i}
+            letter={letter}
+            onClick={(e) => onKey(letter)}
+          >
             {letter}
           </button>
         ))}
       </StyledKeyboardRow>
       <StyledKeyboardRow className="styled-kb-row">
         {Row2.map((letter, i) => (
-          <button key={i} letter={letter} onClick={(e) => onKey(letter)}>
+          <button
+            className={props.state.guessedLetters[letter]}
+            key={i}
+            letter={letter}
+            onClick={(e) => onKey(letter)}
+          >
             {letter}
           </button>
         ))}
@@ -27,15 +38,15 @@ function Keyboard(props) {
         {Row3.map((letter, i) => {
           return letter === "Enter" || letter === "Backspace" ? (
             <button
+              className={props.state.guessedLetters[letter] + " big"}
               key={i}
-              className="big"
               letter={letter}
               onClick={(e) => onKey(letter)}
             >
               {letter.replace("Backspace", "⌫")}
             </button>
           ) : (
-            <button key={i} letter={letter} onClick={(e) => onKey(letter)}>
+            <button className={props.state.guessedLetters[letter]} key={i} letter={letter} onClick={(e) => onKey(letter)}>
               {letter}
             </button>
           );

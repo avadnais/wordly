@@ -1,43 +1,51 @@
 const initialState = {
-  guess: '',
-  solution: '',
+  guess: "",
+  solution: "",
   correct: false,
   submittedGuesses: [],
-  submittedGuessesClues: []
-}
+  submittedGuessesClues: [],
+  guessedLetters: {},
+};
 
 export const guessReducer = (state = initialState, action) => {
   switch (action.type) {
     case "addLetter":
       return {
         ...state,
-        guess: state.guess + action.payload
+        guess: state.guess + action.payload,
       };
     case "removeLetter":
       return {
         ...state,
-        guess: state.guess.slice(0, -1)
+        guess: state.guess.slice(0, -1),
       };
     case "toggleCorrect":
       return {
         ...state,
-        correct: !state.correct
-      }
+        correct: !state.correct,
+      };
     case "setSolution":
       return {
         ...state,
-        solution: action.payload
-      }
+        solution: action.payload,
+      };
     case "submitGuess":
       return {
         ...state,
         submittedGuesses: [...state.submittedGuesses, state.guess],
-        guess: ''
-      }
+        guess: "",
+      };
     case "addClue":
       return {
         ...state,
-        submittedGuessesClues: [...state.submittedGuessesClues, action.payload]
+        submittedGuessesClues: [...state.submittedGuessesClues, action.payload],
+      };
+    case "addGuessedLetter":
+      return {
+        ...state,
+        guessedLetters: {
+          ...state.guessedLetters, 
+          [action.payload.letter]: action.payload.isThere}
       }
     default:
       return state;
@@ -47,7 +55,7 @@ export const guessReducer = (state = initialState, action) => {
 export function addLetter(letter) {
   return {
     type: `addLetter`,
-    payload: letter
+    payload: letter,
   };
 }
 export function removeLetter() {
@@ -58,26 +66,36 @@ export function removeLetter() {
 
 export function toggleCorrect() {
   return {
-    type: 'toggleCorrect',
-  }
+    type: "toggleCorrect",
+  };
 }
 
-export function setSolution(word){
+export function setSolution(word) {
   return {
     type: "setSolution",
-    payload: word
-  }
+    payload: word,
+  };
 }
 
-export function submitGuess(){
+export function submitGuess() {
   return {
     type: "submitGuess",
-  }
+  };
 }
 
-export function addClue(clue){
+export function addClue(clue) {
   return {
     type: "addClue",
-    payload: clue
+    payload: clue,
+  };
+}
+
+export function addGuessedLetter(letter, isThere){
+  return {
+    type: 'addGuessedLetter',
+    payload: {
+      letter: letter,
+      isThere: isThere
+    }
   }
 }
