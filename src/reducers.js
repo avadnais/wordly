@@ -5,6 +5,7 @@ const initialState = {
   submittedGuesses: [],
   submittedGuessesClues: [],
   guessedLetters: {},
+  gameOver: false
 };
 
 export const guessReducer = (state = initialState, action) => {
@@ -47,6 +48,13 @@ export const guessReducer = (state = initialState, action) => {
           ...state.guessedLetters, 
           [action.payload.letter]: action.payload.isThere}
       }
+    case "toggleGameOver":
+      return {
+        ...state,
+        gameOver: !state.gameOver
+      }
+    case "newGame":
+      return initialState;
     default:
       return state;
   }
@@ -97,5 +105,17 @@ export function addGuessedLetter(letter, isThere){
       letter: letter,
       isThere: isThere
     }
+  }
+}
+
+export function toggleGameOver(){
+  return {
+    type: 'toggleGameOver'
+  }
+}
+
+export function newGame(){
+  return {
+    type: 'newGame'
   }
 }

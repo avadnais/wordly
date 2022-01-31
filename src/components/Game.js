@@ -4,6 +4,8 @@ import GameBoard from "./GameBoard";
 import Keyboard from "./Keyboard";
 import { StyledGame } from "./styles/Game.styled";
 import {
+  newGame,
+  toggleGameOver,
   addGuessedLetter,
   addClue,
   removeLetter,
@@ -39,6 +41,12 @@ function Game(props) {
     }
 
     if (key === "Enter") {
+
+      if(state.gameOver){
+        dispatch(newGame())
+        return;
+      }
+
       if (state.guess.length < 5) {
         alert("Too short");
         return;
@@ -73,9 +81,11 @@ function Game(props) {
       state.submittedGuesses[state.submittedGuesses.length - 1] ===
       state.solution
     ) {
-      alert("You win!");
+      alert("You win!\nPress Enter to start new game");
+      dispatch(toggleGameOver())
     } else if (state.submittedGuesses.length === 6) {
-      alert(`You lose! The word was ${state.solution}`);
+      alert(`You lose! The word was ${state.solution}\nPress Enter to start new game`);
+      dispatch(toggleGameOver())
       //resetGame()
     }
   };
