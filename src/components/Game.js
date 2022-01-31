@@ -50,9 +50,6 @@ function Game(props) {
 
       dispatch(submitGuess());
       checkGuessedLetters();
-      //dispatch(submitGuessedLetters());
-      //console.log(state.guessedLetters)
-      //console.log(state);
       checkGuess();
     }
   };
@@ -122,7 +119,7 @@ function Game(props) {
 
   useEffect(() => {
     checkGuess();
-  });
+  }, [state.submittedGuesses]);
 
   useEffect(() => {
     checkForClues();
