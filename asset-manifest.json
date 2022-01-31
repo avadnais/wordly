@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/wordly/static/css/main.eea535f8.css",
-    "main.js": "/wordly/static/js/main.7d015ca4.js",
+    "main.js": "/wordly/static/js/main.f2d5f8f2.js",
     "index.html": "/wordly/index.html",
     "main.eea535f8.css.map": "/wordly/static/css/main.eea535f8.css.map",
-    "main.7d015ca4.js.map": "/wordly/static/js/main.7d015ca4.js.map"
+    "main.f2d5f8f2.js.map": "/wordly/static/js/main.f2d5f8f2.js.map"
   },
   "entrypoints": [
     "static/css/main.eea535f8.css",
-    "static/js/main.7d015ca4.js"
+    "static/js/main.f2d5f8f2.js"
   ]
 }
