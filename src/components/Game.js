@@ -155,7 +155,7 @@ function Game(props) {
     for(const clue of state.submittedGuessesClues){
       resultsStr += clue.reduce((a, b) => a + b) + '\n'
     }
-    const resultsMsg = `[wordly]\n\n${resultsStr}\n[${state.solution.toLowerCase()}]`
+    const resultsMsg = `[wrdly]\n\n${resultsStr}\n[${state.solution.toLowerCase()}]`
     return resultsMsg;
   };
 

@@ -1,7 +1,7 @@
 {
-  "name": "wordly",
+  "name": "wrdly",
   "version": "0.1.0",
-  "homepage": "https://avadnais.github.io/wordly",
+  "homepage": "https://avadnais.github.io/wrdly",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.7.1",
