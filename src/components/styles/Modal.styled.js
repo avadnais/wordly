@@ -31,7 +31,7 @@ export const StyledModal =  styled.div`
     button {
         font-size: calc(1rem + .2vw);
         color: whitesmoke;
-        margin: 1rem;
+        margin: .5rem 0;
         width: 50%;
         height: 10%;
         background-color: #1b1b1be3;

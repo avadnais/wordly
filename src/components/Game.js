@@ -159,10 +159,6 @@ function Game(props) {
     return resultsMsg;
   };
 
-  const toggleCopy = () => {
-    dispatch(toggleCopiedToClipboard());
-  }
-
   return (
     <StyledGame className="game">
       <Header />
@@ -172,8 +168,9 @@ function Game(props) {
         word={state.solution}
         correct={state.correct}
         text={getCopyToClipboardMessage()}
-        toggleCopied={toggleCopy}
+        toggleCopied={() => dispatch(toggleCopiedToClipboard())}
         copied={state.copiedToClipboard}
+        close={() => dispatch(toggleModal())}
       />
       <GameBoard state={state} dispatch={dispatch} />
       <p style={{'display': state.gameOver ? 'block' : 'none'}}>Press Enter to start a new puzzle</p>
@@ -184,4 +181,3 @@ function Game(props) {
 
 export default Game;
 
-//<button onClick={() => {navigator.clipboard.writeText('Andy :)')}}></button>
