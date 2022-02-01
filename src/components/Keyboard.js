@@ -20,7 +20,6 @@ function Keyboard(props) {
             key={i}
             letter={letter}
             onClick={(e) => onKey(letter)}
-            selectedLetter={props.state.selectedLetter}
           >
             {letter}
           </StyledButton>
@@ -33,7 +32,6 @@ function Keyboard(props) {
             key={i}
             letter={letter}
             onClick={(e) => onKey(letter)}
-            selectedLetter={props.state.selectedLetter}
           >
             {letter}
           </StyledButton>
@@ -47,13 +45,11 @@ function Keyboard(props) {
               key={i}
               letter={letter}
               onClick={(e) => onKey(letter)}
-              selectedLetter={props.state.selectedLetter}
             >
               {letter.replace("Backspace", "⌫")}
             </StyledButton>
           ) : (
             <StyledButton
-              selectedLetter={props.state.selectedLetter}
               className={props.state.guessedLetters[letter]}
               key={i}
               letter={letter}

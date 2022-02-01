@@ -1,18 +1,20 @@
 import styled, { keyframes } from "styled-components";
 
-
-
 const animateColor = (c) => keyframes`
     0% {
       background-color: transparent;
     }
 
     100% {
-      background-color: ${ c === "🟩"
-          ?  "rgba(63, 191, 63, .7)" 
-          : c === "🟨" 
+      background-color: ${
+        c === "🟩"
+          ? "rgba(63, 191, 63, .7)"
+          : c === "🟨"
           ? "rgba(228, 228, 31, .7)"
-          : "transparent"};
+          : c === "⬜"
+          ? "#474747b3"
+          : "transparent"
+      };
     }
 `;
 
@@ -38,8 +40,9 @@ export const StyledTile = styled.div`
       ? "rgba(63, 191, 63, .7)"
       : props.clue === "🟨"
       ? "rgba(228, 228, 31, .7)"
+      : props.clue === "⬜"
+      ? "#474747b3"
       : "transparent"};
 
-  animation: ${props => animateColor(props.clue)} 1s;
+  animation: ${(props) => animateColor(props.clue)} 1s;
 `;
-

@@ -3,8 +3,8 @@ import Header from "./Header";
 import GameBoard from "./GameBoard";
 import Keyboard from "./Keyboard";
 import { StyledGame } from "./styles/Game.styled";
+import Modal from "./Modal";
 import {
-  setSelectedLetter,
   newGame,
   toggleGameOver,
   addGuessedLetter,
@@ -14,14 +14,14 @@ import {
   addLetter,
   toggleCorrect,
   setSolution,
-  clearSelectedLetter,
+  toggleModal,
 } from "../reducers";
 
 import { words } from "./words.js";
 
 function Game(props) {
   const { state, dispatch } = props;
-  const TIMEOUT = 50;
+  const TIMEOUT = 10;
 
   const generateSolutionWord = () => {
     let solutionWord = "";
@@ -36,10 +36,6 @@ function Game(props) {
     const keyIsLetter = /[a-zA-Z]{1}/.test(key);
 
     if (key === "Backspace") {
-      dispatch(setSelectedLetter('Backspace'))
-      setTimeout(() => {
-        dispatch(clearSelectedLetter())
-      }, TIMEOUT)
       dispatch(removeLetter());
     }
 
@@ -49,11 +45,8 @@ function Game(props) {
 
     if (key === "Enter") {
 
-      dispatch(setSelectedLetter('Enter'))
-      dispatch(clearSelectedLetter())
-
-      if(state.gameOver){
-        dispatch(newGame())
+      if (state.gameOver) {
+        dispatch(newGame());
         dispatch(setSolution(generateSolutionWord()));
         return;
       }
@@ -62,8 +55,8 @@ function Game(props) {
         alert("Too short");
         return;
       }
-      if(!words.includes(state.guess)){
-        alert(`${state.guess} not found`)
+      if (!words.includes(state.guess)) {
+        alert(`${state.guess} not found`);
         return;
       }
       dispatch(submitGuess());
@@ -75,9 +68,6 @@ function Game(props) {
   const handleLetter = (key) => {
     if (state.guess.length >= 5) return;
     dispatch(addLetter(key.toUpperCase()));
-    setTimeout(() => {
-      dispatch(clearSelectedLetter())
-    }, TIMEOUT)
     if (state.guess.length > 0) {
       if (state.guess === state.solution) {
         dispatch(toggleCorrect());
@@ -89,14 +79,13 @@ function Game(props) {
     const lettersArr = state.guess.split("");
 
     for (const letter of lettersArr) {
-        (state.solution.includes(letter) &&
-          state.solution.charAt(state.guess.indexOf(letter)) === letter) ||
-        state.guessedLetters[letter] === "green"
-          ? dispatch(addGuessedLetter(letter, "green"))
-          : state.solution.includes(letter)
-          ? dispatch(addGuessedLetter(letter, "yellow"))
-          : dispatch(addGuessedLetter(letter, "gray"));
-
+      (state.solution.includes(letter) &&
+        state.solution.charAt(state.guess.indexOf(letter)) === letter) ||
+      state.guessedLetters[letter] === "green"
+        ? dispatch(addGuessedLetter(letter, "green"))
+        : state.solution.includes(letter)
+        ? dispatch(addGuessedLetter(letter, "yellow"))
+        : dispatch(addGuessedLetter(letter, "gray"));
     }
   };
 
@@ -105,12 +94,11 @@ function Game(props) {
       state.submittedGuesses[state.submittedGuesses.length - 1] ===
       state.solution
     ) {
-      alert("You win!\nPress Enter to start new game");
-      dispatch(toggleGameOver())
+      dispatch(toggleGameOver());
+      dispatch(toggleModal());
     } else if (state.submittedGuesses.length === 6) {
-      alert(`You lose! The word was ${state.solution}\nPress Enter to start new game`);
-      dispatch(toggleGameOver())
-      //resetGame()
+      dispatch(toggleGameOver());
+      dispatch(toggleModal());
     }
   };
 
@@ -159,13 +147,28 @@ function Game(props) {
     //console.log(state);
   }, [state.submittedGuesses]);
 
+  const handleModalClose = () => {
+    console.log(`toggling modal`);
+    dispatch(toggleModal());
+  };
+
   return (
     <StyledGame className="game">
       <Header />
+      <Modal
+        visible={state.modalVisible}
+        clues={state.submittedGuessesClues}
+        word={state.solution}
+        correct={state.correct}
+        handleClose={handleModalClose}
+      />
       <GameBoard state={state} dispatch={dispatch} />
+      <p style={{'display': state.gameOver ? 'block' : 'none'}}>Press Enter to start a new puzzle</p>
       <Keyboard state={state} dispatch={dispatch} onKey={onKey} />
     </StyledGame>
   );
 }
 
 export default Game;
+
+//<button onClick={() => {navigator.clipboard.writeText('Andy :)')}}></button>
