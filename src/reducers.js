@@ -6,7 +6,8 @@ const initialState = {
   submittedGuessesClues: [],
   guessedLetters: {},
   gameOver: false,
-  modalVisible: false
+  modalVisible: false,
+  copiedToClipboard: false,
 };
 
 export const guessReducer = (state = initialState, action) => {
@@ -61,6 +62,11 @@ export const guessReducer = (state = initialState, action) => {
         ...state,
         modalVisible: !state.modalVisible
       }
+    case 'toggleCopiedToClipboard':
+        return {
+          ...state,
+          copiedToClipboard: !state.copiedToClipboard
+        }
     default:
       return state;
   }
@@ -129,5 +135,10 @@ export function newGame(){
 export function toggleModal(){
   return {
     type: 'toggleModal'
+  }
+}
+export function toggleCopiedToClipboard(){
+  return {
+    type: 'toggleCopiedToClipboard'
   }
 }

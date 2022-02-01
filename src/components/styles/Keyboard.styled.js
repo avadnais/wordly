@@ -14,12 +14,12 @@ const pop = keyframes`
 
 export const StyledButton = styled.button`
   font-size: 1.2rem;
-  margin: 0px 5px 0 0;
+  margin: 0px 2.5px;
   min-height: 3.5rem;
   border-radius: 4px;
   width: min(2.5rem, 8vw);
   border: none;
-  padding: none;
+  padding: 1px;
   background-color: #535353;
   color: white;
   overflow: hidden;

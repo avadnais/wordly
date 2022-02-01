@@ -5,6 +5,7 @@ import Keyboard from "./Keyboard";
 import { StyledGame } from "./styles/Game.styled";
 import Modal from "./Modal";
 import {
+  toggleCopiedToClipboard,
   newGame,
   toggleGameOver,
   addGuessedLetter,
@@ -94,6 +95,7 @@ function Game(props) {
       state.submittedGuesses[state.submittedGuesses.length - 1] ===
       state.solution
     ) {
+      dispatch(toggleCorrect());
       dispatch(toggleGameOver());
       dispatch(toggleModal());
     } else if (state.submittedGuesses.length === 6) {
@@ -147,10 +149,19 @@ function Game(props) {
     //console.log(state);
   }, [state.submittedGuesses]);
 
-  const handleModalClose = () => {
-    console.log(`toggling modal`);
-    dispatch(toggleModal());
+  /* Returns formatted string of results */
+  const getCopyToClipboardMessage = () => {
+    let resultsStr = '';
+    for(const clue of state.submittedGuessesClues){
+      resultsStr += clue.reduce((a, b) => a + b) + '\n'
+    }
+    const resultsMsg = `[wordly]\n\n${resultsStr}\n[${state.solution.toLowerCase()}]`
+    return resultsMsg;
   };
+
+  const toggleCopy = () => {
+    dispatch(toggleCopiedToClipboard());
+  }
 
   return (
     <StyledGame className="game">
@@ -160,7 +171,9 @@ function Game(props) {
         clues={state.submittedGuessesClues}
         word={state.solution}
         correct={state.correct}
-        handleClose={handleModalClose}
+        text={getCopyToClipboardMessage()}
+        toggleCopied={toggleCopy}
+        copied={state.copiedToClipboard}
       />
       <GameBoard state={state} dispatch={dispatch} />
       <p style={{'display': state.gameOver ? 'block' : 'none'}}>Press Enter to start a new puzzle</p>

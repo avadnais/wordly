@@ -1,17 +1,22 @@
 import React from "react";
-import {StyledModal} from './styles/Modal.styled'
+import { StyledModal } from "./styles/Modal.styled";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 function Modal(props) {
   return (
-      <StyledModal visible={props.visible}>
-        <h3>{props.correct ? "Correct!" : "Not Quite!"}</h3>
-        {props.clues.map((a, b) => {
-          return <p key={b}>{a.reduce((x, y) => x + y)}</p>
-        })}
-        <p className="word">{props.word}</p>
+    <StyledModal visible={props.visible}>
+      <h3>{props.correct ? "Correct!" : "Not Quite!"}</h3>
+      {props.clues.map((a, b) => {
+        return <p key={b}>{a.reduce((x, y) => x + y)}</p>;
+      })}
+      <p className="word">{props.word}</p>
 
-        <button onClick={props.handleClose}>Close</button>
-      </StyledModal>
+      <CopyToClipboard text={props.text} onCopy={props.toggleCopied}>
+      <button >
+        {props.copied ? "Results copied!" : "Copy to Clipboard"}
+      </button>
+      </CopyToClipboard>
+    </StyledModal>
   );
 }
 

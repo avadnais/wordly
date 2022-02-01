@@ -5,8 +5,8 @@ export const StyledModal =  styled.div`
     justify-content: center;
     position: absolute;
     min-width: min(90vw, 450px);
-    height: 50%;
-    border: 2px solid whitesmoke;
+    height: 56vh;
+    transform: translateY(-15%);
     z-index: 100;
     background-color: #252525e3;
     display: ${props => props.visible ? 'flex' : 'none'};
@@ -23,15 +23,16 @@ export const StyledModal =  styled.div`
     }
 
     .word {
-        margin-top: 5px;
+        margin: 5px 0;
         text-indent: 1rem;
         letter-spacing: 1rem;
     }
 
     button {
+        font-size: calc(1rem + .2vw);
         color: whitesmoke;
         margin: 1rem;
-        width: 25%;
+        width: 50%;
         height: 10%;
         background-color: #1b1b1be3;
         cursor: pointer;
