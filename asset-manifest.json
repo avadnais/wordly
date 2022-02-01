@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/wordly/static/css/main.eea535f8.css",
-    "main.js": "/wordly/static/js/main.d413a573.js",
-    "index.html": "/wordly/index.html",
-    "main.eea535f8.css.map": "/wordly/static/css/main.eea535f8.css.map",
-    "main.d413a573.js.map": "/wordly/static/js/main.d413a573.js.map"
+    "main.css": "/wrdly/static/css/main.eea535f8.css",
+    "main.js": "/wrdly/static/js/main.020b1325.js",
+    "index.html": "/wrdly/index.html",
+    "main.eea535f8.css.map": "/wrdly/static/css/main.eea535f8.css.map",
+    "main.020b1325.js.map": "/wrdly/static/js/main.020b1325.js.map"
   },
   "entrypoints": [
     "static/css/main.eea535f8.css",
-    "static/js/main.d413a573.js"
+    "static/js/main.020b1325.js"
   ]
 }
