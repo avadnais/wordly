@@ -11,12 +11,17 @@ function Modal(props) {
       })}
       <p className="word">{props.word}</p>
 
-      <CopyToClipboard text={props.text} onCopy={props.toggleCopied}>
+      <CopyToClipboard text={props.resultText} onCopy={props.toggleResultIsCopied}>
         <button>
-          {props.copied ? "Results copied!" : "Copy to Clipboard"}
+          {props.resultIsCopied ? "Results copied!" : "Copy to Clipboard"}
         </button>
       </CopyToClipboard>
-      <button onClick={props.close}>Close</button>
+      <CopyToClipboard text={props.challengeText} onCopy={props.toggleChallengeIsCopied}>
+        <button>
+          {props.challengeIsCopied ? "Challenge copied!" : "Send Challenge"}
+        </button>
+      </CopyToClipboard>
+      <button onClick={props.handleClose}>Close</button>
     </StyledModal>
   );
 }
