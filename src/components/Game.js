@@ -151,14 +151,8 @@ function Game(props) {
   }, [state.submittedGuesses]);
 
   useEffect(() => {
-<<<<<<< HEAD
     checkForClues();// eslint-disable-next-line
-=======
-    checkForClues();
-    //console.log(state);
->>>>>>> parent of aa12d50 (challange feature copy link to puzzle word)
-  }, [state.submittedGuesses]);
-
+  }
   /* Returns formatted string of results */
   const getCopyToClipboardMessage = () => {
     let resultsStr = '';
