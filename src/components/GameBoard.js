@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
 import Tile from "./Tile.js";
 import {
   StyledGameBoard,
   GameBoardContainer,
   StyledGameBoardRow,
 } from "./styles/GameBoard.styled";
-import { toggleCorrect } from "../reducers.js";
 
 function GameBoard(props) {
   const { state, dispatch } = props;

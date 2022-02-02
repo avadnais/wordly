@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import Header from "./Header";
 import GameBoard from "./GameBoard";
 import Keyboard from "./Keyboard";
@@ -27,7 +27,7 @@ function Game(props) {
   const SECRET = 'wrdly'
   const PATH = '/wrdly/'
 
-  const generateSolutionWord = () => {
+  const generateSolutionWord = useCallback(() => {
     let solution = "";
     while (solution.length !== 5) {
       solution = words[Math.floor(Math.random() * words.length)];
@@ -43,8 +43,7 @@ function Game(props) {
       window.history.pushState(null, "", encrypt(SECRET, solution));
     }
     dispatch(setSolution(solution));
-    
-  };
+  }, [dispatch]);;
 
   const onKey = (key) => {
     const keyIsLetter = /[a-zA-Z]{1}/.test(key);
@@ -101,7 +100,7 @@ function Game(props) {
         ? dispatch(addGuessedLetter(letter, "yellow"))
         : dispatch(addGuessedLetter(letter, "gray"));
     }
-  };
+  }
 
   const checkGuess = () => {
     if (
@@ -136,7 +135,7 @@ function Game(props) {
 
   useEffect(() => {
       setSolution(generateSolutionWord());
-  }, []);
+  }, [generateSolutionWord]);
 
   useEffect(() => {
     const onKeyDown = (e) => {
@@ -147,15 +146,15 @@ function Game(props) {
 
     return () => {
       document.removeEventListener("keydown", onKeyDown);
-    };
+    }; // eslint-disable-next-line
   }, [state, dispatch]);
 
   useEffect(() => {
-    checkGuess();
+    checkGuess();// eslint-disable-next-line
   }, [state.submittedGuesses]);
 
   useEffect(() => {
-    checkForClues();
+    checkForClues();// eslint-disable-next-line
   }, [state.submittedGuesses]);
 
   /* Returns formatted string of results */
