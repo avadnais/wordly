@@ -125,14 +125,9 @@ function Game(props) {
   };
 
   useEffect(() => {
-<<<<<<< HEAD
-      setSolution(generateSolutionWord());
-  }, [generateSolutionWord]);
-=======
     const solution = generateSolutionWord();
     dispatch(setSolution(solution));
   }, []);
->>>>>>> parent of aa12d50 (challange feature copy link to puzzle word)
 
   useEffect(() => {
     const onKeyDown = (e) => {
@@ -151,8 +146,10 @@ function Game(props) {
   }, [state.submittedGuesses]);
 
   useEffect(() => {
-    checkForClues();// eslint-disable-next-line
-  }
+    checkForClues();
+    //console.log(state);
+  }, [state.submittedGuesses]);
+
   /* Returns formatted string of results */
   const getCopyToClipboardMessage = () => {
     let resultsStr = '';
