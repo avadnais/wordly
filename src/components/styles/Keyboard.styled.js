@@ -39,9 +39,6 @@ export const StyledKeyboard = styled.div`
   grid-template-rows: repeat(3, 1fr);
   grid-auto-columns: auto;
   width: 100%;
-  @media only screen and (max-width: 500px){
-    margin-bottom: 1rem;
-  }
 `;
 
 export const StyledKeyboardRow = styled.div`

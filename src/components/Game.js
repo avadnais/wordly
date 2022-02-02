@@ -4,10 +4,8 @@ import GameBoard from "./GameBoard";
 import Keyboard from "./Keyboard";
 import { StyledGame } from "./styles/Game.styled";
 import Modal from "./Modal";
-import { encrypt, decrypt } from "../features/crypto";
 import {
-  toggleResultIsCopied,
-  toggleChallengeIsCopied,
+  toggleCopiedToClipboard,
   newGame,
   toggleGameOver,
   addGuessedLetter,
@@ -24,28 +22,19 @@ import { words } from "./words.js";
 
 function Game(props) {
   const { state, dispatch } = props;
-  const SECRET = 'wrdly'
-  const PATH = '/wrdly/'
+  const TIMEOUT = 10;
 
-  const generateSolutionWord = useCallback(() => {
-    let solution = "";
-    while (solution.length !== 5) {
-      solution = words[Math.floor(Math.random() * words.length)];
+
+  const generateSolutionWord = () => {
+    let solutionWord = "";
+    while (solutionWord.length !== 5) {
+      solutionWord = words[Math.floor(Math.random() * words.length)];
     }
-
-    const path = window.location.pathname;  
-
-    if (!(path === PATH)) { //url has solution
-      solution = decrypt(SECRET, path.substring(7))
-      window.history.pushState(null, "", encrypt(SECRET, solution))
-    } else { //on first page load 
-      window.history.pushState(null, "", PATH)
-      window.history.pushState(null, "", encrypt(SECRET, solution));
-    }
-    dispatch(setSolution(solution));
-  }, [dispatch]);;
+    return solutionWord;
+  };
 
   const onKey = (key) => {
+    //console.log(`keyDown: ${key}`);
     const keyIsLetter = /[a-zA-Z]{1}/.test(key);
 
     if (key === "Backspace") {
@@ -57,10 +46,10 @@ function Game(props) {
     }
 
     if (key === "Enter") {
+
       if (state.gameOver) {
         dispatch(newGame());
-        window.history.pushState(null, "", PATH)
-        setSolution(generateSolutionWord());
+        dispatch(setSolution(generateSolutionWord()));
         return;
       }
 
@@ -121,6 +110,7 @@ function Game(props) {
       const clue = [
         ...state.submittedGuesses[state.submittedGuesses.length - 1],
       ].map((letter, i) => {
+        //console.log(letter)
         if (state.solution.charAt(i) === letter) {
           return "🟩";
         }
@@ -129,13 +119,20 @@ function Game(props) {
         }
         return "⬜";
       });
+      //console.log(clue);
       dispatch(addClue(clue));
     }
   };
 
   useEffect(() => {
+<<<<<<< HEAD
       setSolution(generateSolutionWord());
   }, [generateSolutionWord]);
+=======
+    const solution = generateSolutionWord();
+    dispatch(setSolution(solution));
+  }, []);
+>>>>>>> parent of aa12d50 (challange feature copy link to puzzle word)
 
   useEffect(() => {
     const onKeyDown = (e) => {
@@ -154,25 +151,22 @@ function Game(props) {
   }, [state.submittedGuesses]);
 
   useEffect(() => {
+<<<<<<< HEAD
     checkForClues();// eslint-disable-next-line
+=======
+    checkForClues();
+    //console.log(state);
+>>>>>>> parent of aa12d50 (challange feature copy link to puzzle word)
   }, [state.submittedGuesses]);
 
   /* Returns formatted string of results */
-  const getResultsMessage = () => {
-    let resultsStr = "";
-    for (const clue of state.submittedGuessesClues) {
-      resultsStr += clue.reduce((a, b) => a + b) + "\n";
+  const getCopyToClipboardMessage = () => {
+    let resultsStr = '';
+    for(const clue of state.submittedGuessesClues){
+      resultsStr += clue.reduce((a, b) => a + b) + '\n'
     }
-    const resultsMsg = `[wrdly]\n\n${resultsStr}\n[${state.solution.toLowerCase()}]`;
+    const resultsMsg = `[wrdly]\n\n${resultsStr}\n[${state.solution.toLowerCase()}]`
     return resultsMsg;
-  };
-  const getChallengeMessage = () => {
-    let resultsStr = "";
-    for (const clue of state.submittedGuessesClues) {
-      resultsStr += clue.reduce((a, b) => a + b) + "\n";
-    }
-    const challengeMsg = `I challenge you in [wrdly]\n\n${resultsStr}\n${window.location}`;
-    return challengeMsg;
   };
 
   return (
@@ -183,21 +177,17 @@ function Game(props) {
         clues={state.submittedGuessesClues}
         word={state.solution}
         correct={state.correct}
-        resultText={state.solution && getResultsMessage()}
-        toggleResultIsCopied={() => dispatch(toggleResultIsCopied())}
-        resultIsCopied={state.resultIsCopied}
-        challengeText={state.solution && getChallengeMessage()}
-        challengeIsCopied={state.challengeIsCopied}
-        toggleChallengeIsCopied={() => dispatch(toggleChallengeIsCopied())}
-        handleClose={() => dispatch(toggleModal())}
+        text={getCopyToClipboardMessage()}
+        toggleCopied={() => dispatch(toggleCopiedToClipboard())}
+        copied={state.copiedToClipboard}
+        close={() => dispatch(toggleModal())}
       />
       <GameBoard state={state} dispatch={dispatch} />
-      <p style={{ display: state.gameOver ? "block" : "none" }}>
-        Press Enter to start a new puzzle
-      </p>
+      <p style={{'display': state.gameOver ? 'block' : 'none'}}>Press Enter to start a new puzzle</p>
       <Keyboard state={state} dispatch={dispatch} onKey={onKey} />
     </StyledGame>
   );
 }
 
 export default Game;
+

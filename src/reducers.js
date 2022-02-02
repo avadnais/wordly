@@ -7,8 +7,7 @@ const initialState = {
   guessedLetters: {},
   gameOver: false,
   modalVisible: false,
-  resultIsCopied: false,
-  challengeIsCopied: false
+  copiedToClipboard: false,
 };
 
 export const guessReducer = (state = initialState, action) => {
@@ -63,15 +62,10 @@ export const guessReducer = (state = initialState, action) => {
         ...state,
         modalVisible: !state.modalVisible
       }
-    case 'toggleResultIsCopied':
+    case 'toggleCopiedToClipboard':
         return {
           ...state,
-          resultIsCopied: !state.resultIsCopied
-        }
-    case 'toggleChallengeIsCopied':
-        return {
-          ...state,
-          challengeIsCopied: !state.challengeIsCopied
+          copiedToClipboard: !state.copiedToClipboard
         }
     default:
       return state;
@@ -143,13 +137,8 @@ export function toggleModal(){
     type: 'toggleModal'
   }
 }
-export function toggleResultIsCopied(){
+export function toggleCopiedToClipboard(){
   return {
-    type: 'toggleResultIsCopied'
-  }
-}
-export function toggleChallengeIsCopied(){
-  return {
-    type: 'toggleChallengeIsCopied'
+    type: 'toggleCopiedToClipboard'
   }
 }
