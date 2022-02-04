@@ -2,4 +2,4 @@
 
 A remake of Josh Wardle's Wordle. Play as many times as you like.
 
-Built with ReactJS & Redux.
+Built with ReactJS using Redux and Styled Components.
