@@ -38,7 +38,7 @@ function Game(props) {
     }
 
     if (keyIsLetter && key.length === 1) {
-      handleLetter(key);
+      handleLetter(key.toLowerCase());
     }
 
     if (key === "Enter") {
