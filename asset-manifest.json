@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/wrdly/static/css/main.eea535f8.css",
-    "main.js": "/wrdly/static/js/main.1ee03a81.js",
+    "main.js": "/wrdly/static/js/main.d1e3f028.js",
     "index.html": "/wrdly/index.html",
     "main.eea535f8.css.map": "/wrdly/static/css/main.eea535f8.css.map",
-    "main.1ee03a81.js.map": "/wrdly/static/js/main.1ee03a81.js.map"
+    "main.d1e3f028.js.map": "/wrdly/static/js/main.d1e3f028.js.map"
   },
   "entrypoints": [
     "static/css/main.eea535f8.css",
-    "static/js/main.1ee03a81.js"
+    "static/js/main.d1e3f028.js"
   ]
 }
