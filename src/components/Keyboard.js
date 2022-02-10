@@ -16,10 +16,11 @@ function Keyboard(props) {
       <StyledKeyboardRow className="styled-kb-row">
         {Row1.map((letter, i) => (
           <StyledButton
-            className={props.state.guessedLetters[letter]}
+            className={props.state.guessedLetters[letter.toLowerCase()]}
             key={i}
             letter={letter}
             onClick={(e) => onKey(letter)}
+            selectedLetter={props.state.selectedLetter}
           >
             {letter}
           </StyledButton>
@@ -28,10 +29,11 @@ function Keyboard(props) {
       <StyledKeyboardRow className="styled-kb-row">
         {Row2.map((letter, i) => (
           <StyledButton
-            className={props.state.guessedLetters[letter]}
+            className={props.state.guessedLetters[letter.toLowerCase()]}
             key={i}
             letter={letter}
             onClick={(e) => onKey(letter)}
+            selectedLetter={props.state.selectedLetter}
           >
             {letter}
           </StyledButton>
@@ -41,19 +43,23 @@ function Keyboard(props) {
         {Row3.map((letter, i) => {
           return letter === "Enter" || letter === "Backspace" ? (
             <StyledButton
-              className={props.state.guessedLetters[letter] + " big"}
+              className={
+                props.state.guessedLetters[letter.toLowerCase()] + " big"
+              }
               key={i}
               letter={letter}
               onClick={(e) => onKey(letter)}
+              selectedLetter={props.state.selectedLetter}
             >
               {letter.replace("Backspace", "⌫")}
             </StyledButton>
           ) : (
             <StyledButton
-              className={props.state.guessedLetters[letter]}
+              className={props.state.guessedLetters[letter.toLowerCase()]}
               key={i}
               letter={letter}
               onClick={(e) => onKey(letter)}
+              selectedLetter={props.state.selectedLetter}
             >
               {letter}
             </StyledButton>

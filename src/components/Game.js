@@ -41,6 +41,7 @@ function Game(props) {
     }
 
     if (key === "Enter") {
+      console.log(state);
       if (state.gameOver) {
         dispatch(newGame());
         dispatch(setSolution(generateSolutionWord()));
