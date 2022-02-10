@@ -8,6 +8,7 @@ const initialState = {
   gameOver: false,
   modalVisible: false,
   copiedToClipboard: false,
+  easterEggRows: [],
 };
 
 export const guessReducer = (state = initialState, action) => {
@@ -47,30 +48,48 @@ export const guessReducer = (state = initialState, action) => {
       return {
         ...state,
         guessedLetters: {
-          ...state.guessedLetters, 
-          [action.payload.letter]: action.payload.isThere}
-      }
+          ...state.guessedLetters,
+          [action.payload.letter]: action.payload.isThere,
+        },
+      };
     case "toggleGameOver":
       return {
         ...state,
-        gameOver: !state.gameOver
-      }
+        gameOver: !state.gameOver,
+      };
     case "newGame":
       return initialState;
-    case 'toggleModal':
-      return{
+    case "toggleModal":
+      return {
         ...state,
-        modalVisible: !state.modalVisible
-      }
-    case 'toggleCopiedToClipboard':
-        return {
-          ...state,
-          copiedToClipboard: !state.copiedToClipboard
-        }
+        modalVisible: !state.modalVisible,
+      };
+    case "toggleCopiedToClipboard":
+      return {
+        ...state,
+        copiedToClipboard: !state.copiedToClipboard,
+      };
+    case "toggleIsEasterEgg":
+      return {
+        ...state,
+        isEasterEgg: !state.isEasterEgg,
+      };
+    case "addEasterEggRow":
+      return {
+        ...state,
+        easterEggRows: [...state.easterEggRows, action.payload],
+      };
     default:
       return state;
   }
 };
+
+export function addEasterEggRow(rowNum) {
+  return {
+    type: "addEasterEggRow",
+    payload: rowNum,
+  };
+}
 
 export function addLetter(letter) {
   return {
@@ -110,35 +129,35 @@ export function addClue(clue) {
   };
 }
 
-export function addGuessedLetter(letter, isThere){
+export function addGuessedLetter(letter, isThere) {
   return {
-    type: 'addGuessedLetter',
+    type: "addGuessedLetter",
     payload: {
       letter: letter,
-      isThere: isThere
-    }
-  }
+      isThere: isThere,
+    },
+  };
 }
 
-export function toggleGameOver(){
+export function toggleGameOver() {
   return {
-    type: 'toggleGameOver'
-  }
+    type: "toggleGameOver",
+  };
 }
 
-export function newGame(){
+export function newGame() {
   return {
-    type: 'newGame'
-  }
+    type: "newGame",
+  };
 }
 
-export function toggleModal(){
+export function toggleModal() {
   return {
-    type: 'toggleModal'
-  }
+    type: "toggleModal",
+  };
 }
-export function toggleCopiedToClipboard(){
+export function toggleCopiedToClipboard() {
   return {
-    type: 'toggleCopiedToClipboard'
-  }
+    type: "toggleCopiedToClipboard",
+  };
 }

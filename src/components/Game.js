@@ -16,6 +16,7 @@ import {
   toggleCorrect,
   setSolution,
   toggleModal,
+  addEasterEggRow,
 } from "../reducers";
 
 import { solutionWords, guessWords } from "./words.js";
@@ -41,7 +42,6 @@ function Game(props) {
     }
 
     if (key === "Enter") {
-      console.log(state);
       if (state.gameOver) {
         dispatch(newGame());
         dispatch(setSolution(generateSolutionWord()));
@@ -107,18 +107,27 @@ function Game(props) {
 
   const checkForClues = () => {
     if (state.submittedGuesses.length > 0) {
-      const clue = [
-        ...state.submittedGuesses[state.submittedGuesses.length - 1],
-      ].map((letter, i) => {
-        //console.log(letter)
-        if (state.solution.charAt(i) === letter) {
-          return "🟩";
+      let clue;
+      if (
+        state.submittedGuesses[state.submittedGuesses.length - 1] === "laura"
+      ) {
+        clue = ["❤️", "❤️", "❤️", "❤️", "❤️"];
+        dispatch(addEasterEggRow(state.submittedGuesses.length));
+        dispatch(addClue(clue));
+        return;
+      }
+      clue = [...state.submittedGuesses[state.submittedGuesses.length - 1]].map(
+        (letter, i) => {
+          //console.log(letter)
+          if (state.solution.charAt(i) === letter) {
+            return "🟩";
+          }
+          if (state.solution.includes(letter)) {
+            return "🟨";
+          }
+          return "⬜";
         }
-        if (state.solution.includes(letter)) {
-          return "🟨";
-        }
-        return "⬜";
-      });
+      );
       //console.log(clue);
       dispatch(addClue(clue));
     }

@@ -13,6 +13,8 @@ const animateColor = (c) => keyframes`
           ? "rgba(228, 228, 31, .7)"
           : c === "⬜"
           ? "#474747b3"
+          : c === "❤️"
+          ? "#f5a1e0"
           : "transparent"
       };
     }
@@ -42,6 +44,8 @@ export const StyledTile = styled.div`
       ? "rgba(228, 228, 31, .7)"
       : props.clue === "⬜"
       ? "#474747b3"
+      : props.clue === "❤️"
+      ? "#f5a1e0"
       : "transparent"};
 
   animation: ${(props) => animateColor(props.clue)} 1s;
