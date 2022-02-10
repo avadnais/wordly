@@ -18,19 +18,14 @@ import {
   toggleModal,
 } from "../reducers";
 
-import { words } from "./words.js";
+import { solutionWords, guessWords } from "./words.js";
 
 function Game(props) {
   const { state, dispatch } = props;
   const TIMEOUT = 10;
 
-
   const generateSolutionWord = () => {
-    let solutionWord = "";
-    while (solutionWord.length !== 5) {
-      solutionWord = words[Math.floor(Math.random() * words.length)];
-    }
-    return solutionWord;
+    return solutionWords[Math.floor(Math.random() * solutionWords.length)];
   };
 
   const onKey = (key) => {
@@ -46,7 +41,6 @@ function Game(props) {
     }
 
     if (key === "Enter") {
-
       if (state.gameOver) {
         dispatch(newGame());
         dispatch(setSolution(generateSolutionWord()));
@@ -57,7 +51,12 @@ function Game(props) {
         alert("Too short");
         return;
       }
-      if (!words.includes(state.guess)) {
+      if (
+        !(
+          guessWords.includes(state.guess) ||
+          solutionWords.includes(state.guess)
+        )
+      ) {
         alert(`${state.guess} not found`);
         return;
       }
@@ -69,7 +68,7 @@ function Game(props) {
 
   const handleLetter = (key) => {
     if (state.guess.length >= 5) return;
-    dispatch(addLetter(key.toUpperCase()));
+    dispatch(addLetter(key));
     if (state.guess.length > 0) {
       if (state.guess === state.solution) {
         dispatch(toggleCorrect());
@@ -89,7 +88,7 @@ function Game(props) {
         ? dispatch(addGuessedLetter(letter, "yellow"))
         : dispatch(addGuessedLetter(letter, "gray"));
     }
-  }
+  };
 
   const checkGuess = () => {
     if (
@@ -142,7 +141,7 @@ function Game(props) {
   }, [state, dispatch]);
 
   useEffect(() => {
-    checkGuess();// eslint-disable-next-line
+    checkGuess(); // eslint-disable-next-line
   }, [state.submittedGuesses]);
 
   useEffect(() => {
@@ -152,11 +151,11 @@ function Game(props) {
 
   /* Returns formatted string of results */
   const getCopyToClipboardMessage = () => {
-    let resultsStr = '';
-    for(const clue of state.submittedGuessesClues){
-      resultsStr += clue.reduce((a, b) => a + b) + '\n'
+    let resultsStr = "";
+    for (const clue of state.submittedGuessesClues) {
+      resultsStr += clue.reduce((a, b) => a + b) + "\n";
     }
-    const resultsMsg = `[wrdly]\n\n${resultsStr}\n[${state.solution.toLowerCase()}]`
+    const resultsMsg = `[wrdly]\n\n${resultsStr}\n[${state.solution}]`;
     return resultsMsg;
   };
 
@@ -174,11 +173,12 @@ function Game(props) {
         close={() => dispatch(toggleModal())}
       />
       <GameBoard state={state} dispatch={dispatch} />
-      <p style={{'display': state.gameOver ? 'block' : 'none'}}>Press Enter to start a new puzzle</p>
+      <p style={{ display: state.gameOver ? "block" : "none" }}>
+        Press Enter to start a new puzzle
+      </p>
       <Keyboard state={state} dispatch={dispatch} onKey={onKey} />
     </StyledGame>
   );
 }
 
 export default Game;
-
