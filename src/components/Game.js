@@ -175,7 +175,7 @@ function Game(props) {
       <Modal
         visible={state.modalVisible}
         clues={state.submittedGuessesClues}
-        word={state.solution}
+        word={state.solution.toUpperCase()}
         correct={state.correct}
         text={getCopyToClipboardMessage()}
         toggleCopied={() => dispatch(toggleCopiedToClipboard())}
